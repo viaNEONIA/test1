@@ -1,15 +1,15 @@
-<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>StockLite v10.1.1 解析比較</title>
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>StockLite v10.2 解析比較</title>
 <style>body{font:16px system-ui;max-width:760px;margin:20px auto;padding:0 14px;background:#f4f6f8;color:#18202a}button,select,input{font:inherit;padding:12px;margin:5px 0;max-width:100%}button{cursor:pointer}section{background:white;border-radius:12px;padding:15px;margin:12px 0}#camera{width:100%;min-height:220px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}label{display:block}#status{font-weight:bold}video{max-width:100%}</style>
-<h1>StockLite v10.1.1 解析比較</h1><p>在庫を操作しない独立診断ページです。画像・コードは記録しません。オンラインのHTTPS環境で使用してください。</p>
-<section><label>形式 <select id="format"><option>JAN-13</option><option>JAN-8</option><option>QR</option></select></label>
+<h1>StockLite v10.2 解析比較</h1><p>在庫を操作しない独立診断ページです。画像・コードは記録しません。オンラインのHTTPS環境で使用してください。</p>
+<p><strong>ビルド：v10.2-dev-fullframe-1</strong></p><section><label>形式 <select id="format"><option>JAN-13</option><option>JAN-8</option><option>QR</option></select></label>
 <label>期待するコード（端末メモリ内のみ）<input id="expected" autocomplete="off" placeholder="印刷されたJANを入力"></label><p>JANは期待値との完全一致・桁数・チェックデジットを自動照合します。</p>
 <label>試験条件 <select id="condition"><option value="base">v9既定</option><option value="hd">解像度1280×720希望のみ</option><option value="af">連続AFのみ</option><option value="zoom">ズーム1.5倍のみ</option><option value="fps">解析15fpsのみ</option><option value="box">横長領域のみ</option></select></label>
 <button id="start">カメラ起動</button> <button id="stop">停止</button><div id="camera"></div>
 <button id="live">A ライブ計測開始（10秒）</button> <button id="frame">C 今の静止フレームを解析</button>
-<button id="pair">D 同じフレームを両エンジンで比較</button><button id="regions">E 同じフレームの全体／ライブ領域をZXingで比較</button><p>D/Eは期待するコードを入力してから実行。比較中はライブ解析だけ一時停止し、終了後に再開します。</p><div id="fileDecoder" style="position:absolute;left:-20000px;width:1px;min-height:1px;overflow:hidden" aria-hidden="true"></div>
+<button id="continuous">F ZXing 全体映像で連続読取（10秒）</button><p>Fは期待コードを入力して実行。同じ内容を別フレームで2回続けて読めたら完了します。</p><button id="pair">D 同じフレームを両エンジンで比較</button><button id="regions">E 同じフレームの全体／ライブ領域をZXingで比較</button><p>D/Eは期待するコードを入力してから実行。比較中はライブ解析だけ一時停止し、終了後に再開します。</p><div id="fileDecoder" style="position:absolute;left:-20000px;width:1px;min-height:1px;overflow:hidden" aria-hidden="true"></div>
 <label>B 標準カメラで撮影した写真 <input id="photo" type="file" accept="image/*"></label>
 <p id="status" role="status">未起動</p><p id="result"></p><button id="correct">直前結果：一致</button> <button id="wrong">直前結果：誤認識</button></section>
 <section><h2>診断と記録</h2><p>読取結果を印刷物と照合して「一致」「誤認識」を押してください。結果の文字列は画面表示のみです。書き出しには含めません。</p><button id="export">記録JSONを書き出す</button><pre id="info"></pre><pre id="summary"></pre></section>
 <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js"></script>
-<script src="diagnostic.js"></script><script src="paired.js"></script></html>
+<script src="diagnostic.js?v=10.2.1"></script><script src="paired.js?v=10.2.1"></script><script src="continuous.js?v=10.2.1"></script></html>
