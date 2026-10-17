@@ -1,5 +1,22 @@
-# StockLite v10.4.1-dev iPhone統合試験版
+# StockLite v10.4.2-dev iPhone統合試験版
 
+
+
+## v10.4.2 一時停止UIの準備待ち
+
+ユーザー画像のエラーは `[internal error] scanner paused UI element not found`。BUILDはv10.4.1、処理段階は起動失敗：読み取り中、APIの開始完了は返っていた。従ってカメラ開始後のhtml5-qrcode.pause(false)で失敗し、後片付けでカメラを閉じたケースと判断する。
+
+html5-qrcode 2.3.8ソースではstartのPromiseを解決する経路と、onRenderSurfaceReadyからsetupUiを呼んで一時停止UIを生成する経路が分かれている。pauseは状態をPAUSEDへ遷移させた後でUI表示を行い、UIが未生成なら今回のエラーを投げる。単に例外を無視して続行すると不完全な状態を残し得るため、その回避は行わない。
+
+変更: start完了後、videoの実寸が正で解析canvasも生成済みになるまで25ms間隔で待機し、その後にpause(false)する。setupUiはcanvas追加から一時停止UI生成まで同じ同期処理内で行うため、canvasを確認した次の非同期処理でpauseする。ライブラリの非公開フィールドは参照・変更しない。8秒で準備できなければCameraSurfaceTimeoutを表示。停止・画面遷移・再起動でセッションが変われば待機を中止し、遅れてpauseやZXing開始を実行しない。
+
+配置: ZIP内ios-candidateの一式を試験環境へ配置し、stocklite-v10-4-2.htmlを開く。ヘッダーはv10.4.2-dev、診断BUILDはv10.4.2-dev-surface-ready-1。過去版の固有名HTMLは変更履歴用で、今回の起動には使用しない。
+
+検証: 準備前はwaitIOSSurfaceが解決しないこと、映像/canvasが揃った後に解決すること、セッション変更時は中止することを模擬試験で確認。数量保存・従来方式への切替などの既存模擬試験も合格。iPhone実機での修正後動作は未確認。
+
+参照した固定版ソース: https://github.com/mebjas/html5-qrcode/blob/v2.3.8/src/html5-qrcode.ts のstart、setupUi、pause、showPausedState。
+
+以下は過去版の記録。今回の確認文字列はv10.4.2-dev-surface-ready-1。
 
 ## v10.4.1 カメラ起動修正
 
